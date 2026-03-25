@@ -1,0 +1,49 @@
+:root {
+  font-family: var(--font-body);
+  line-height: 1.5;
+  font-weight: 400;
+  color: #2f1f1f;
+  background:
+    radial-gradient(circle at top, rgba(238, 205, 172, 0.35), transparent 28%),
+    linear-gradient(180deg, #f6ece4, #f2dfd0 45%, #efe2d7);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --brand: #72202d;
+  --brand-deep: #53141d;
+  --ink: #311d1b;
+  --ink-strong: #23130f;
+  --muted: #66534d;
+  --accent-soft: #ffd8ac;
+  --font-body: 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-display: Georgia, 'Times New Roman', serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+a,
+button,
+input {
+  font: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+#root {
+  min-height: 100vh;
+}
