@@ -4,19 +4,22 @@
   font-weight: 400;
   color: #2f1f1f;
   background:
-    radial-gradient(circle at top, rgba(238, 205, 172, 0.35), transparent 28%),
-    linear-gradient(180deg, #f6ece4, #f2dfd0 45%, #efe2d7);
+    radial-gradient(circle at top, rgba(218, 175, 107, 0.18), transparent 28%),
+    linear-gradient(180deg, #f8f3ed, #f3ebe1 45%, #efe4d7);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --brand: #72202d;
-  --brand-deep: #53141d;
-  --ink: #311d1b;
-  --ink-strong: #23130f;
-  --muted: #66534d;
-  --accent-soft: #ffd8ac;
+  --brand: #8d1f2d;
+  --brand-deep: #5f1420;
+  --brand-soft: #b63f3c;
+  --gold: #d7aa59;
+  --gold-soft: #f1dfb4;
+  --ink: #34211d;
+  --ink-strong: #22120f;
+  --muted: #69544c;
+  --accent-soft: #f3d9a0;
   --font-body: 'Avenir Next', 'Segoe UI', sans-serif;
   --font-display: Georgia, 'Times New Roman', serif;
 }

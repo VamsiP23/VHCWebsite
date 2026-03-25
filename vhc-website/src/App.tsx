@@ -22,11 +22,6 @@ type PageId =
   | 'contact'
   | 'donate'
 
-type NavItem = {
-  id: PageId
-  shortIcon: string
-}
-
 type TeamMember = {
   name: string
   role: string
@@ -48,18 +43,18 @@ const integralCareUrl = 'https://integralcare.org/'
 const txaccFindClinicUrl = 'https://texasacc.org/find-a-clinic-page/'
 const facebookUrl = 'https://www.facebook.com/VolunteerHealthcareClinic/'
 
-const navItems: NavItem[] = [
-  { id: 'home', shortIcon: 'H' },
-  { id: 'services', shortIcon: 'S' },
-  { id: 'patients', shortIcon: 'P' },
-  { id: 'volunteer', shortIcon: 'V' },
-  { id: 'about', shortIcon: 'A' },
-  { id: 'events', shortIcon: 'E' },
-  { id: 'resources', shortIcon: 'R' },
-  { id: 'find-clinic', shortIcon: 'F' },
-  { id: 'jobs', shortIcon: 'J' },
-  { id: 'contact', shortIcon: 'C' },
-  { id: 'donate', shortIcon: 'D' },
+const navItems: PageId[] = [
+  'home',
+  'services',
+  'patients',
+  'volunteer',
+  'about',
+  'events',
+  'resources',
+  'find-clinic',
+  'jobs',
+  'contact',
+  'donate',
 ]
 
 const boardMembers: TeamMember[] = [
@@ -817,8 +812,8 @@ function pageHref(page: PageId) {
 
 function getPageFromHash(hash: string): PageId {
   const cleaned = hash.replace(/^#\/?/, '')
-  const page = navItems.find((item) => item.id === cleaned)
-  return page?.id ?? 'home'
+  const page = navItems.find((item) => item === cleaned)
+  return page ?? 'home'
 }
 
 function getInitials(name: string) {
@@ -1526,12 +1521,11 @@ function App() {
       <nav className="primary-nav" aria-label="Primary">
         {navItems.map((item) => (
           <a
-            key={item.id}
-            className={page === item.id ? 'active' : undefined}
-            href={pageHref(item.id)}
+            key={item}
+            className={page === item ? 'active' : undefined}
+            href={pageHref(item)}
           >
-            <span className="nav-icon">{item.shortIcon}</span>
-            <span>{copy[lang].pageName[item.id]}</span>
+            <span>{copy[lang].pageName[item]}</span>
           </a>
         ))}
       </nav>
