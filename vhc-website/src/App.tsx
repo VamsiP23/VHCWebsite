@@ -17,8 +17,6 @@ type PageId =
   | 'about'
   | 'events'
   | 'resources'
-  | 'find-clinic'
-  | 'jobs'
   | 'contact'
   | 'donate'
 
@@ -51,8 +49,6 @@ const navItems: PageId[] = [
   'about',
   'events',
   'resources',
-  'find-clinic',
-  'jobs',
   'contact',
   'donate',
 ]
@@ -105,6 +101,7 @@ const boardMembers: TeamMember[] = [
 ]
 
 const staffMembers: TeamMember[] = [
+  { name: 'Marci Roe', role: 'Executive Director' },
   { name: 'Laura Hurst', role: 'Director of Volunteers & Engagement' },
   { name: 'Silvia Reyes', role: 'Director of Patient Services' },
   { name: 'Emily Tovar', role: 'Office Manager' },
@@ -170,13 +167,11 @@ const copy = {
       home: 'Home',
       services: 'Services',
       patients: 'Patients',
-      volunteer: 'Volunteer',
+      volunteer: 'Join Us',
       about: 'About',
       events: 'Events',
       resources: 'Resources',
-      'find-clinic': 'Find a Clinic',
-      jobs: 'Jobs',
-      contact: 'Contact',
+      contact: 'Contact Us',
       donate: 'Donate',
     },
     status: {
@@ -383,12 +378,10 @@ const copy = {
       home: 'Inicio',
       services: 'Servicios',
       patients: 'Pacientes',
-      volunteer: 'Voluntariado',
+      volunteer: 'Únete',
       about: 'Nosotros',
       events: 'Eventos',
       resources: 'Recursos',
-      'find-clinic': 'Buscar clínica',
-      jobs: 'Empleos',
       contact: 'Contacto',
       donate: 'Donar',
     },
@@ -596,13 +589,11 @@ const copy = {
       home: 'Accueil',
       services: 'Services',
       patients: 'Patients',
-      volunteer: 'Bénévolat',
+      volunteer: 'Nous rejoindre',
       about: 'À propos',
       events: 'Événements',
       resources: 'Ressources',
-      'find-clinic': 'Trouver une clinique',
-      jobs: 'Emplois',
-      contact: 'Contact',
+      contact: 'Contact Us',
       donate: 'Don',
     },
     status: {
@@ -812,6 +803,12 @@ function pageHref(page: PageId) {
 
 function getPageFromHash(hash: string): PageId {
   const cleaned = hash.replace(/^#\/?/, '')
+  if (cleaned === 'jobs') {
+    return 'volunteer'
+  }
+  if (cleaned === 'find-clinic') {
+    return 'resources'
+  }
   const page = navItems.find((item) => item === cleaned)
   return page ?? 'home'
 }
@@ -885,65 +882,58 @@ function TeamGrid({ title, people }: { title: string; people: TeamMember[] }) {
 }
 
 function HomePage({ lang }: { lang: Language }) {
-  const c = copy[lang]
-
   return (
     <>
-      <section className="hero-home">
-        <div className="hero-home-copy">
-          <p className="eyebrow">{c.pageName.home}</p>
-          <h1>{c.home.title}</h1>
-          <p>{c.home.text}</p>
+      <section className="home-photo-hero">
+        <div className="home-photo-copy">
+          <p className="eyebrow">Home</p>
+          <h1>Care close to home.</h1>
+          <p>
+            The Volunteer Healthcare Clinic (VHC) believes access to quality
+            medical care is the foundation of a healthy and thriving community.
+          </p>
           <div className="hero-actions">
-            <a href={pageHref('patients')}>{c.home.buttons[0]}</a>
+            <a href="https://secure.mailhippo.com/portal/FillPubWebForm.aspx?token=ug7UAQibO9HYp1ClL3ZHoaJTOTcqYoibYk9llVr2XtI%3D" target="_blank" rel="noreferrer">
+              Patient Registration
+            </a>
             <a className="secondary" href={pageHref('donate')}>
-              {c.home.buttons[1]}
+              Donate
             </a>
           </div>
-          <div className="hero-mini-cards">
-            {c.home.cards.map((item) => (
-              <div key={item} className="mini-card">
-                <span className="mini-dot" />
-                <p>{item}</p>
-              </div>
-            ))}
-          </div>
         </div>
-
-        <div className="hero-photo-stack">
-          {c.home.stories.map((story, index) => (
-            <article key={story.title} className={`photo-card photo-card-${index + 1}`}>
-              <div className="photo-card-overlay">
-                <h3>{story.title}</h3>
-                <p>{story.text}</p>
-              </div>
-            </article>
-          ))}
+        <div className="home-photo-main">
+          <img
+            src="https://www.volclinic.org/uploads/6/1/5/9/61595609/background-images/520128390.jpg"
+            alt="Volunteer Healthcare Clinic"
+          />
         </div>
       </section>
 
-      <section className="home-quick-grid">
-        <div className="panel soft-panel">
+      <section className="home-info-grid">
+        <div className="panel hours-panel">
           <SectionTitle
-            icon="Go"
-            eyebrow={c.home.quickTitle}
-            title={c.home.quickText}
-            text={c.contact.phone}
+            icon="Hrs"
+            eyebrow="Clinic Hours"
+            title="Evening clinic schedule"
+            text="Most patient visits happen in the evening."
           />
-          <div className="quick-links-grid">
-            <a href={pageHref('patients')}>{c.pageName.patients}</a>
-            <a href={pageHref('volunteer')}>{c.pageName.volunteer}</a>
-            <a href={pageHref('resources')}>{c.pageName.resources}</a>
-            <a href={pageHref('find-clinic')}>{c.pageName['find-clinic']}</a>
+          <div className="hours-list">
+            <div><strong>Wednesday</strong><span>Closed</span></div>
+            <div><strong>Thursday</strong><span>5-9 PM</span></div>
+            <div><strong>Friday</strong><span>Closed</span></div>
+            <div><strong>Saturday</strong><span>Closed</span></div>
+            <div><strong>Sunday</strong><span>Closed</span></div>
+            <div><strong>Monday</strong><span>5-9 PM</span></div>
+            <div><strong>Tuesday</strong><span>5-9 PM</span></div>
           </div>
         </div>
 
         <div className="panel location-panel">
           <SectionTitle
             icon="Map"
-            eyebrow={c.home.directionsTitle}
-            title={copy[lang].footer.address}
-            text={c.home.directionsText}
+            eyebrow="Clinic Location"
+            title="4215 Medical Parkway, Austin, Texas 78756"
+            text="The clinic is on Medical Parkway near 43rd Street. Please park on the street so volunteer spots stay open."
           />
           <div className="map-frame">
             <iframe
@@ -956,12 +946,27 @@ function HomePage({ lang }: { lang: Language }) {
         </div>
       </section>
 
-      <section className="panel partner-panel">
+      <section className="home-stats-grid">
+        <article className="stat-card">
+          <h3>5,000+</h3>
+          <p>medical visits each year</p>
+        </article>
+        <article className="stat-card">
+          <h3>2,000</h3>
+          <p>people helped each year</p>
+        </article>
+        <article className="stat-card">
+          <h3>1966</h3>
+          <p>year the clinic began serving Austin</p>
+        </article>
+      </section>
+
+      <section className="panel partner-panel compact-partners">
         <SectionTitle
           icon="Aid"
-          eyebrow={c.home.partnerTitle}
-          title={c.home.partnerTitle}
-          text={c.resources.text}
+          eyebrow="Community Support"
+          title="Partners who help this work"
+          text="The clinic grows through local medical and community support."
         />
         <div className="partner-grid">
           {partners.map((partner) => (
@@ -982,31 +987,8 @@ function HomePage({ lang }: { lang: Language }) {
 }
 
 function ServicesPage({ lang }: { lang: Language }) {
-  const c = copy[lang]
+  const [openSections, setOpenSections] = useState<number[]>([])
   const exactServiceText = [
-    {
-      title: 'Our Services',
-      body: [],
-    },
-    {
-      title: 'Who Can We Help? (Patient Rules) ',
-      body: ['To get care at Volunteer Healthcare Clinic, you must:'],
-      bullets: [
-        'Have no health insurance (this means no MAP, Medicaid/CHIP, Medicare, or private insurance).',
-        'Meet our low-income rules.',
-        'Live in Travis County.',
-        "Show a photo ID (like a driver's license or consulate card).",
-        'Show proof of where you live (like a utility bill or lease agreement).',
-        'We ask for a $10 donation if you are able to give',
-      ],
-    },
-    {
-      title: 'Acute vs. Chronic Pain',
-      body: [
-        'Acute pain is short-term pain. It often starts suddenly, like after an injury or illness, and gets better as your body heals. It usually lasts less than 3 months.',
-        'Chronic pain is long-term pain. It lasts 3 months or longer, even after the body has had time to heal. It may come and go or be there all the time.',
-      ],
-    },
     {
       title: 'Basic Medical Care (Walk-In Clinics) When: Daytime and Tuesday/Thursday Evenings',
       body: [
@@ -1089,52 +1071,174 @@ function ServicesPage({ lang }: { lang: Language }) {
         'While we can help with joint pain (arthritis) or short-term back pain, we cannot treat long-term pain (chronic pain management).',
       ],
     },
+    {
+      title: "Women's Health",
+      body: [
+        `The Clinic conducts two 'Well Woman' Clinics during the spring and fall each year during which pap smears, breast exams, mammogram screenings and common screenings are available.`,
+        'These well woman exams are for healthy women specifically and these services are only available during these special clinics twice a year.',
+      ],
+    },
+    {
+      title: 'Social Service Referrals',
+      body: [
+        'Additional resources for other health and human services and/or community/ basic needs organizations are available as needed.',
+        'VHC staff and volunteers are able to answer any questions and there is a community resource bulletin board in the waiting room.',
+        'Patients can also call 211 for a resource listing line of services available in Central Texas.',
+      ],
+    },
+    {
+      title: 'Services Not Provided',
+      body: [
+        'The Clinic provides a wide range of services and takes care of many common health problems, however we do not have the ability to care for all health needs.',
+        'VHC is not an emergency room or urgent care facility and we are not able to care for seriously ill patients.',
+        'The following is a general list of services we cannot accommodate at the Clinic.',
+      ],
+      bullets: [
+        'Emergency Care',
+        'Routine Physicals',
+        'Immunizations (limited to flu vaccines for established patients, call us for more information)',
+        'Gynecological or Obstetrical Care (including pap smears)',
+        'Pregnancy Testing or Prenatal Care',
+        'Medical Care for pregnant women',
+        'Severe Mental Health illness including: schizophrenia, bi-polar disorder, ADD-ADHD, personality disorders, severe depression or severe anxiety',
+        'STD testing or STD treatment',
+        'Dental Care',
+        'Cancer screening or treatment',
+        'Surgery',
+      ],
+      afterBullets: [
+        'If we cannot help you here, we will try to direct you to other clinics or facilities who have the resources for your medical needs.',
+      ],
+    },
+    {
+      title: 'Pharmacy Services',
+      body: [
+        'Pharmacy and Lab',
+        'The Clinic has a state-licensed, Class A Pharmacy that carries common generic medications that are prescribed to established VHC patients by VHC providers.',
+        'The Clinic does not carry, dispense or write prescriptions for controlled medications.',
+        'The Clinic also has an on-site laboratory to perform routine testing that is ordered by VHC providers.',
+        'Lab draws are done on-site at VHC and sent over to Ascension/Seton Hospital to be processed.',
+        'All lab reports will be reviewed by a VHC provider before they are added to a patient’s medical chart.',
+        'Please note that patients will only be called about lab results if there is some type of follow up required and/or they need to return to the Clinic.',
+        'Patients wanting to find out lab results can call VHC at 512-459-6002, press 0 and set up a Nurse Callback, which can take a couple of days after the results are reviewed.',
+        '',
+        'Pharmacy Hours',
+      ],
+      bullets: [
+        'Daytime: Tuesday, Wednesday, Friday from 12:00pm-3:00pm',
+        'Evening: Tuesday & Thursday 7:00pm-8:30pm',
+        'Prescriptions must be dispensed by a Pharmacist so you can only pick up medication during pharmacy hours.',
+        'VHC staff attempts to call patients when their medication is ready, however we cannot always reach everyone. If you did not receive a call, you can call us during pharmacy hours to check if your prescription is ready.',
+      ],
+      afterBullets: [
+        'Medication Refills',
+        'If your prescriptions has refills noted on the bottle, you can call and request a refill.',
+        'You will need to have the prescription bottle handy so you can provide the medication name, strength & quantity.',
+        'If there are no refills noted on bottle, you will need to schedule an appointment.',
+        'Refills should be requested at least one week before your medication runs out.',
+        'Please call 512-459-6002 and Press 0 to request a refill during normal business hours: Mon - Fri 10am-4pm',
+        'Please do NOT call during our evening clinics (Mon, Tues, Thurs from 6pm - 10pm) as staff may be too busy to answer the phone.',
+      ],
+    },
   ] as const
+
+  function toggleSection(index: number) {
+    setOpenSections((current) =>
+      current.includes(index)
+        ? current.filter((item) => item !== index)
+        : [...current, index],
+    )
+  }
 
   return (
     <section className="services-page">
-      <div className="services-story-layout">
-        <div className="services-header">
-          <p className="eyebrow">{c.pageName.services}</p>
-          <h1>{c.services.title}</h1>
-          <p>{c.services.text}</p>
-        </div>
+      <section className="services-info-boxes">
+        <article className="service-info-box">
+          <div className="service-copy-head">
+            <h2>Who can we help?</h2>
+          </div>
+          <p>To get care at Volunteer Healthcare Clinic, you must:</p>
+          <ul className="service-bullet-list">
+            <li>Have no health insurance (this means no MAP, Medicaid/CHIP, Medicare, or private insurance).</li>
+            <li>Meet our low-income rules.</li>
+            <li>Live in Travis County.</li>
+            <li>Show a photo ID (like a driver's license or consulate card).</li>
+            <li>Show proof of where you live (like a utility bill or lease agreement).</li>
+            <li>We ask for a $10 donation if you are able to give</li>
+          </ul>
+        </article>
 
-        <div className="services-visual-column" aria-hidden="true">
-          <article className="service-visual visual-care">
-            <div className="visual-label">Walk-In Care</div>
-          </article>
-          <article className="service-visual visual-family">
-            <div className="visual-label">Long-Term Support</div>
-          </article>
-          <article className="service-visual visual-visit">
-            <div className="visual-label">Specialty Visits</div>
-          </article>
-        </div>
-      </div>
+        <article className="service-info-box">
+          <div className="service-copy-head">
+            <h2>Acute vs. Chronic</h2>
+          </div>
+          <div className="service-info-copy">
+            <div className="service-info-split">
+              <h3>Acute pain</h3>
+              <p>
+                Acute pain is short-term pain. It often starts suddenly, like
+                after an injury or illness, and gets better as your body heals.
+                It usually lasts less than 3 months.
+              </p>
+            </div>
+            <div className="service-info-split">
+              <h3>Chronic pain</h3>
+              <p>
+                Chronic pain is long-term pain. It lasts 3 months or longer,
+                even after the body has had time to heal. It may come and go or
+                be there all the time.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
 
       <section className="service-copy-shell">
         {exactServiceText.map((section, index) => (
-          <article key={`${section.title}-${index}`} className="service-copy-block">
-            <div className="service-copy-head">
-              <h2>{section.title}</h2>
+          <article
+            key={`${section.title}-${index}`}
+            className={`service-copy-block ${openSections.includes(index) ? 'open' : ''}`}
+          >
+            <button
+              type="button"
+              className="service-accordion-trigger"
+              onClick={() => toggleSection(index)}
+              aria-expanded={openSections.includes(index)}
+            >
+              <div className="service-copy-head">
+                <h2>{section.title}</h2>
+              </div>
+              <span className="service-accordion-icon">
+                {openSections.includes(index) ? '−' : '+'}
+              </span>
+            </button>
+
+            <div
+              className={`service-accordion-panel ${openSections.includes(index) ? 'open' : ''}`}
+            >
+              {section.body.map((paragraph, paragraphIndex) =>
+                paragraph ? (
+                  <p key={`${section.title}-p-${paragraphIndex}`}>{paragraph}</p>
+                ) : (
+                  <div
+                    key={`${section.title}-space-${paragraphIndex}`}
+                    className="service-spacer"
+                  />
+                ),
+              )}
+
+              {'bullets' in section && section.bullets ? (
+                <ul className="service-bullet-list">
+                  {section.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+              ) : null}
+
+              {'afterBullets' in section && section.afterBullets
+                ? section.afterBullets.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+                : null}
             </div>
-
-            {section.body.map((paragraph, paragraphIndex) =>
-              paragraph ? <p key={`${section.title}-p-${paragraphIndex}`}>{paragraph}</p> : <div key={`${section.title}-space-${paragraphIndex}`} className="service-spacer" />
-            )}
-
-            {'bullets' in section && section.bullets ? (
-              <ul className="service-bullet-list">
-                {section.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
-            ) : null}
-
-            {'afterBullets' in section && section.afterBullets
-              ? section.afterBullets.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
-              : null}
           </article>
         ))}
       </section>
@@ -1171,45 +1275,99 @@ function PatientsPage({ lang }: { lang: Language }) {
           text={copy[lang].status.helper}
         />
         <LinkCardGrid cards={c.patients.docs} />
+        <div className="document-placeholder-grid">
+          <article className="doc-placeholder">Leave space for new patient packet PDF</article>
+          <article className="doc-placeholder">Leave space for consent forms</article>
+          <article className="doc-placeholder">Leave space for specialty handouts</article>
+        </div>
       </section>
     </section>
   )
 }
 
 function VolunteerPage({ lang }: { lang: Language }) {
-  const c = copy[lang]
-
   return (
     <section className="volunteer-page">
       <div className="volunteer-feature">
         <div className="volunteer-copy">
-          <p className="eyebrow">{c.pageName.volunteer}</p>
-          <h1>{c.volunteer.title}</h1>
-          <p>{c.volunteer.text}</p>
-          <p className="small-note">{c.volunteer.contactLine}</p>
+          <p className="eyebrow">Join Us</p>
+          <h1>Help the clinic as a volunteer or team member.</h1>
+          <p>
+            Join us if you want to volunteer, support events, interpret for
+            patients, or apply for a paid opening.
+          </p>
+          <div className="join-steps">
+            <div><strong>Step 1</strong><span>Fill out Volunteer Application Form</span></div>
+            <div><strong>Step 2</strong><span>Email or fax the completed application to Laura Hurst, Volunteer Director. Email: lhurst@volclinic.org Fax number: 512-646-2693</span></div>
+            <div><strong>Step 3</strong><span>Register for an upcoming volunteer orientation session by sending an email to: lhurst@volclinic.org</span></div>
+          </div>
+          <p className="small-note">
+            Questions about volunteering? Contact Laura Hurst through the
+            clinic.
+          </p>
         </div>
         <div className="volunteer-photo-card">
-          <div className="photo-figure volunteer-figure" />
+          <div className="image-placeholder">Volunteer photo placeholder</div>
         </div>
-      </div>
-
-      <div className="volunteer-lanes">
-        {c.volunteer.lanes.map((lane) => (
-          <article key={lane} className="lane-card">
-            <span className="icon-pill">V</span>
-            <p>{lane}</p>
-          </article>
-        ))}
       </div>
 
       <section className="panel">
         <SectionTitle
-          icon="PDF"
-          eyebrow={c.volunteer.docsTitle}
-          title={c.volunteer.docsTitle}
-          text={c.contact.email}
+          icon="Med"
+          eyebrow="Volunteer Roles"
+          title="Medical"
+          text="We welcome licensed professionals and care support volunteers."
         />
-        <LinkCardGrid cards={c.volunteer.docs} />
+        <ul className="service-bullet-list">
+          <li>Physicians (especially Family Practice and Podiatrists)</li>
+          <li>Advance Practice Nurses</li>
+          <li>Nurses</li>
+          <li>Pharmacists</li>
+          <li>Pharmacy Technicians (must be registered with TSBP</li>
+          <li>Dietitians and Nutritionist</li>
+        </ul>
+      </section>
+
+      <section className="panel">
+        <SectionTitle
+          icon="Help"
+          eyebrow="Volunteer Roles"
+          title="Non-Medical"
+          text="Language help, office help, and community support matter too."
+        />
+        <ul className="service-bullet-list">
+          <li>Spanish Interpreters/Translators</li>
+          <li>Vietnamese Interpreters/Translators</li>
+          <li>Amharic Interpreters/Translators</li>
+          <li>Burmese Interpreters/Translators</li>
+          <li>General Office Support (daytime and evening)</li>
+          <li>Fundraising/PR/Special Projects</li>
+        </ul>
+      </section>
+
+      <section className="panel join-links-panel">
+        <SectionTitle
+          icon="PDF"
+          eyebrow="Volunteer Form"
+          title="Start here"
+          text="Use the real Volunteer Healthcare Clinic volunteer registration form."
+        />
+        <LinkCardGrid
+          cards={[
+            {
+              title: 'Volunteer registration form',
+              text: 'Official Volunteer Healthcare Clinic volunteer application PDF.',
+              href: 'https://www.volclinic.org/uploads/6/1/5/9/61595609/this_one_volunteer_application.pdf',
+              label: 'Open PDF',
+            },
+            {
+              title: 'Current paid opening',
+              text: 'Part-time bilingual Patient Advocate job posting. Reports to the Executive Director. If interested, send a cover letter and resume to mroe@volclinic.org.',
+              href: jobsPdfUrl,
+              label: 'Open job PDF',
+            },
+          ]}
+        />
       </section>
     </section>
   )
@@ -1229,9 +1387,27 @@ function AboutPage({ lang }: { lang: Language }) {
           <p>{c.about.vision}</p>
         </div>
         <div className="about-logo-card">
-          <img src={clinicFooterLogo} alt="Volunteer Healthcare Clinic logo" />
+          <div className="image-placeholder">Clinic photo placeholder</div>
         </div>
       </div>
+
+      <section className="timeline-panel">
+        <h3>Clinic history</h3>
+        <div className="timeline-grid">
+          <article>
+            <strong>1966</strong>
+            <p>The clinic began serving working poor families in Austin who needed quality medical care.</p>
+          </article>
+          <article>
+            <strong>Growth</strong>
+            <p>Over time, the clinic grew through volunteers, community partners, and evening programs for acute and chronic care.</p>
+          </article>
+          <article>
+            <strong>Today</strong>
+            <p>The clinic now supports thousands of visits each year for uninsured patients in Travis County and continues building long-term community support.</p>
+          </article>
+        </div>
+      </section>
 
       <TeamGrid title={c.about.boardTitle} people={boardMembers} />
       <TeamGrid title={c.about.staffTitle} people={staffMembers} />
@@ -1278,79 +1454,68 @@ function EventsPage({ lang }: { lang: Language }) {
 }
 
 function ResourcesPage({ lang }: { lang: Language }) {
-  const c = copy[lang]
-
   return (
     <section className="resources-page">
       <div className="resource-hero">
         <div>
-          <p className="eyebrow">{c.pageName.resources}</p>
-          <h1>{c.resources.title}</h1>
-          <p>{c.resources.text}</p>
+          <p className="eyebrow">Resources</p>
+          <h1>More help beyond our clinic.</h1>
+          <p>
+            Use this page to find urgent help, food help, mental health
+            support, family safety support, and other clinics nearby.
+          </p>
         </div>
         <article className="mental-health-card">
           <span className="icon-pill">MH</span>
-          <h3>{c.resources.mentalTitle}</h3>
-          <p>{c.resources.mentalText}</p>
+          <h3>Mental health help</h3>
+          <p>
+            We do not provide mental health treatment. We send patients to
+            Austin Integral Care for mental health support.
+          </p>
           <a href={integralCareUrl} target="_blank" rel="noreferrer">
-            {c.resources.mentalButton}
+            Go to Integral Care
           </a>
         </article>
       </div>
 
-      <LinkCardGrid cards={c.resources.supportCards} />
-    </section>
-  )
-}
-
-function FindClinicPage({ lang }: { lang: Language }) {
-  const c = copy[lang]
-
-  return (
-    <section className="finder-page">
-      <div className="finder-panel">
-        <p className="eyebrow">{c.pageName['find-clinic']}</p>
-        <h1>{c.findClinic.title}</h1>
-        <p>{c.findClinic.text}</p>
-        <ol>
-          {c.findClinic.steps.map((step) => (
-            <li key={step}>{step}</li>
-          ))}
-        </ol>
-        <a href={txaccFindClinicUrl} target="_blank" rel="noreferrer">
-          {c.findClinic.button}
-        </a>
-      </div>
-    </section>
-  )
-}
-
-function JobsPage({ lang }: { lang: Language }) {
-  const c = copy[lang]
-
-  return (
-    <section className="jobs-page">
-      <div className="jobs-hero">
-        <div>
-          <p className="eyebrow">{c.pageName.jobs}</p>
-          <h1>{c.jobs.title}</h1>
-          <p>{c.jobs.text}</p>
-        </div>
-      </div>
-
-      <div className="jobs-grid">
-        <article className="job-card feature-job">
-          <h3>{c.jobs.openingTitle}</h3>
-          <p>{c.jobs.openingText}</p>
-          <a href={jobsPdfUrl} target="_blank" rel="noreferrer">
-            {c.jobs.openingButton}
-          </a>
-        </article>
-        <article className="job-card">
-          <h3>{c.jobs.generalTitle}</h3>
-          <p>{c.jobs.generalText}</p>
-        </article>
-      </div>
+      <LinkCardGrid
+        cards={[
+          {
+            title: 'Find another clinic',
+            text: 'Use the TXACC clinic map if another free clinic is closer to your home.',
+            href: txaccFindClinicUrl,
+            label: 'Open clinic finder',
+          },
+          {
+            title: 'Domestic abuse help',
+            text: 'If you need help now, contact the National Domestic Violence Hotline.',
+            href: 'https://www.thehotline.org/',
+            label: 'Get help',
+          },
+          {
+            title: 'SNAP benefits',
+            text: 'Apply for food benefits through Your Texas Benefits.',
+            href: 'https://www.yourtexasbenefits.com/',
+            label: 'Open SNAP help',
+          },
+          {
+            title: 'Nutrition and food assistance',
+            text: 'Find food support and healthy food resources through Central Texas Food Bank.',
+            href: 'https://www.centraltexasfoodbank.org/',
+            label: 'Find food help',
+          },
+          {
+            title: 'Emergency help',
+            text: 'For a medical emergency call 911. For suicide and crisis support call or text 988.',
+          },
+          {
+            title: 'Facebook updates',
+            text: 'Follow the clinic on Facebook for quick updates and reminders.',
+            href: facebookUrl,
+            label: 'Open Facebook',
+          },
+        ]}
+      />
     </section>
   )
 }
@@ -1391,64 +1556,98 @@ function ContactPage({ lang }: { lang: Language }) {
 }
 
 function DonatePage({ lang }: { lang: Language }) {
-  const c = copy[lang]
-
   return (
     <section className="donate-page">
       <div className="donate-panel">
-        <p className="eyebrow">{c.pageName.donate}</p>
-        <h1>{c.donate.title}</h1>
-        <p>{c.donate.text}</p>
+        <p className="eyebrow">Donate</p>
+        <h1>Support care that stays free for patients.</h1>
+        <p>
+          Since 1966, the Volunteer Healthcare Clinic has been an excellent
+          source of quality health care for the working poor in Austin.
+        </p>
+        <p>
+          As our name suggests, we carry out our mission almost exclusively
+          through the collective service of over 400 dedicated volunteers and a
+          network of generous community partners and supporters.
+        </p>
+        <p>
+          This volunteer-based approach allows us to provide high-quality care
+          to the neediest member of our community for a fraction of the cost of
+          other clinics and providers - and it&apos;s free to our clients.
+        </p>
+        <p>
+          While the Volunteer Healthcare Clinic is &apos;free&apos; to those who need
+          our services, the cost associated with operating the Clinic is very
+          real. It is the collective and invaluable support of our funders,
+          volunteers and community supporters that make the Clinic services
+          possible.
+        </p>
         <div className="donate-reasons">
-          {c.donate.reasons.map((reason) => (
-            <article key={reason} className="donate-reason">
-              <p>{reason}</p>
-            </article>
-          ))}
+          <article className="donate-reason">
+            <h3>Donate via Network for Good</h3>
+            <p>Make a direct donation to support patient care and clinic operations.</p>
+            <a
+              className="donate-button"
+              href="https://volunteer-healthcare-clinic.networkforgood.com/projects/75788-general-giving-page"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Give now
+            </a>
+          </article>
+          <article className="donate-reason">
+            <h3>Donate to the VHC Endowment Fund</h3>
+            <p>
+              The endowment fund helps secure a sustainable future for the next
+              50 years and beyond. It is managed by Austin Community Foundation.
+            </p>
+            <a
+              className="donate-button"
+              href="https://austincf.fcsuite.com/erp/donate/create/fund?funit_id=1430"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Support the endowment
+            </a>
+          </article>
+          <article className="donate-reason">
+            <h3>Shop and give</h3>
+            <p>
+              Giving Assistant can support Volunteer Healthcare Clinic while you
+              shop online.
+            </p>
+            <a
+              className="donate-button"
+              href="https://givingassistant.org/charity/volunteer-healthcare-clinic-inc"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open Giving Assistant
+            </a>
+          </article>
         </div>
-        <a
-          className="donate-button"
-          href="https://volunteer-healthcare-clinic.networkforgood.com/projects/75788-general-giving-page"
-          target="_blank"
-          rel="noreferrer"
-        >
-          {c.donate.button}
-        </a>
       </div>
     </section>
   )
 }
 
 function Footer({ lang }: { lang: Language }) {
-  const c = copy[lang]
-
   return (
     <footer className="footer">
       <div className="footer-brand">
         <img src={clinicFooterLogo} alt="Volunteer Healthcare Clinic logo" />
-        <p>{c.footer.address}</p>
-      </div>
-
-      <div className="footer-news">
-        <h3>{c.footer.newsletter}</h3>
-        <p>{c.footer.newsletterText}</p>
-        <form className="newsletter-form">
-          <input type="text" placeholder="First" aria-label="First name" />
-          <input type="text" placeholder="Last" aria-label="Last name" />
-          <input type="email" placeholder="Email" aria-label="Email address" />
-          <button type="button">Sign Up</button>
-        </form>
+        <p>4215 Medical Parkway, Austin, Texas 78756</p>
       </div>
 
       <div className="footer-social">
-        <h3>{c.footer.social}</h3>
+        <h3>Facebook</h3>
         <a href={facebookUrl} target="_blank" rel="noreferrer">
           Volunteer Healthcare Clinic Facebook
         </a>
       </div>
 
       <div className="award-strip">
-        <h3>{c.footer.awards}</h3>
+        <h3>Awards and recognition</h3>
         <div className="award-cards">
           <div className="award-card">
             <img src={nafcSeal} alt="NAFC Standards Seal Gold 2025" />
@@ -1461,7 +1660,7 @@ function Footer({ lang }: { lang: Language }) {
         </div>
       </div>
 
-      <p className="footer-rights">{c.footer.rights}</p>
+      <p className="footer-rights">@ 2026 by Volunteer Healthcare Clinic</p>
     </footer>
   )
 }
@@ -1539,7 +1738,6 @@ function App() {
         {page === 'events' && <EventsPage lang={lang} />}
         {page === 'resources' && <ResourcesPage lang={lang} />}
         {page === 'find-clinic' && <FindClinicPage lang={lang} />}
-        {page === 'jobs' && <JobsPage lang={lang} />}
         {page === 'contact' && <ContactPage lang={lang} />}
         {page === 'donate' && <DonatePage lang={lang} />}
       </main>
