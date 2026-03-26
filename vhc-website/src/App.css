@@ -273,7 +273,6 @@ li {
 }
 
 .hero-home-copy h1,
-.services-header h1,
 .patients-hero h1,
 .volunteer-copy h1,
 .about-intro-card h1,
@@ -287,7 +286,6 @@ li {
 }
 
 .hero-home-copy p,
-.services-header p,
 .patients-hero p,
 .volunteer-copy p,
 .about-intro-card p,
@@ -516,7 +514,7 @@ li {
 }
 
 .services-page {
-  padding: 8px 0 4px;
+  padding: 2px 0 4px;
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -524,10 +522,14 @@ li {
 .services-info-boxes {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
-  gap: 18px;
+  gap: 20px;
+  align-items: stretch;
 }
 
 .service-info-box {
+  display: grid;
+  align-content: start;
+  gap: 12px;
   padding: 24px;
   border-radius: 28px;
   background:
@@ -536,17 +538,24 @@ li {
   box-shadow: 0 12px 28px rgba(18, 34, 42, 0.05);
 }
 
+.service-info-box > p {
+  margin: 0;
+  max-width: 56ch;
+  line-height: 1.7;
+}
+
 .service-info-copy {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
-  margin-top: 14px;
+  margin-top: 2px;
 }
 
 .service-info-split {
   padding: 18px;
   border-radius: 18px;
   background: rgba(13, 111, 148, 0.04);
+  border: 1px solid rgba(13, 111, 148, 0.08);
 }
 
 .service-info-split h3 {
@@ -555,84 +564,10 @@ li {
   color: var(--brand);
 }
 
-.service-info-note {
-  margin: 12px 0 0;
-  max-width: 42ch;
-}
-
-.services-story-layout {
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 18px;
-  align-items: stretch;
-}
-
-.services-header {
-  padding: 26px;
-  border-radius: 30px;
-  background:
-    radial-gradient(circle at top right, rgba(242, 140, 40, 0.22), transparent 34%),
-    linear-gradient(180deg, rgba(255, 251, 246, 0.99), rgba(250, 239, 226, 0.98));
-}
-
-.plain-services-header {
-  margin-bottom: 6px;
-}
-
-.plain-services-header h1 {
-  max-width: 18ch;
-  line-height: 1.08;
-}
-
-.services-visual-column {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.service-visual {
-  min-height: 180px;
-  border-radius: 28px;
-  position: relative;
-  overflow: hidden;
-}
-
-.visual-care {
-  background:
-    linear-gradient(180deg, rgba(32, 17, 12, 0.05), rgba(32, 17, 12, 0.36)),
-    linear-gradient(135deg, #ef8a25, #f7cf9a);
-}
-
-.visual-family {
-  background:
-    linear-gradient(180deg, rgba(32, 17, 12, 0.05), rgba(32, 17, 12, 0.36)),
-    linear-gradient(135deg, #0d6f94, #a8d1df);
-}
-
-.visual-visit {
-  grid-column: 1 / -1;
-  min-height: 140px;
-  background:
-    linear-gradient(180deg, rgba(32, 17, 12, 0.05), rgba(32, 17, 12, 0.4)),
-    linear-gradient(135deg, #f28c28, #0d6f94);
-}
-
-.visual-label {
-  position: absolute;
-  left: 18px;
-  bottom: 18px;
-  padding: 10px 14px;
-  border-radius: 999px;
-  background: rgba(255, 248, 241, 0.22);
-  color: #fffaf4;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-}
-
 .service-copy-shell {
   display: grid;
   gap: 14px;
-  margin-top: 18px;
+  margin-top: 8px;
 }
 
 .service-copy-block {
@@ -1153,7 +1088,6 @@ li {
   .hero-home,
   .home-photo-hero,
   .home-info-grid,
-  .services-story-layout,
   .services-info-boxes,
   .patients-hero,
   .volunteer-feature,
@@ -1209,7 +1143,7 @@ li {
 
   .hero-actions,
   .quick-links-grid,
-  .services-visual-column {
+  .service-info-copy {
     grid-template-columns: 1fr;
   }
 
